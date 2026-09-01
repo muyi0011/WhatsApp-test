@@ -1,108 +1,388 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Test</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#25D366">
+
+    <title>联系我们 - WhatsApp</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
         body {
-            font-family: Arial, sans-serif;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f3fff7 0%,
+                    #ffffff 55%,
+                    #f7faf8 100%
+                );
+
+            color: #1f2933;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 28px 16px 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
             text-align: center;
-            padding: 50px 20px;
         }
 
-        h2 {
-            margin-bottom: 15px;
-        }
+        /* Logo */
 
-        p {
-            color: #666;
-            line-height: 1.6;
-        }
+        .logo {
+            width: 76px;
+            height: 76px;
+            margin: 8px auto 18px;
 
-        button {
-            width: 90%;
-            max-width: 350px;
-            padding: 16px;
-            margin: 10px 0;
-            border: 0;
-            border-radius: 8px;
-            font-size: 17px;
-            cursor: pointer;
-        }
+            border-radius: 22px;
 
-        .wa {
             background: #25D366;
-            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 10px 28px rgba(37, 211, 102, 0.22);
+
+            font-size: 40px;
         }
 
-        .web {
-            background: #eee;
-            color: #333;
+        /* 标题 */
+
+        h1 {
+            font-size: 28px;
+            line-height: 1.3;
+            font-weight: 750;
+
+            color: #111827;
+
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            line-height: 1.7;
+
+            color: #667085;
+
+            max-width: 390px;
+            margin: 0 auto 25px;
+        }
+
+        /* 服务卡片 */
+
+        .features {
+            display: grid;
+            gap: 12px;
+
+            margin: 0 auto 26px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+
+            text-align: left;
+
+            background: rgba(255, 255, 255, 0.92);
+
+            border: 1px solid #e8eee9;
+
+            border-radius: 15px;
+
+            padding: 15px 16px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.035);
+        }
+
+        .feature-icon {
+            width: 42px;
+            height: 42px;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background: #e9faef;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+
+            margin-right: 13px;
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-title {
+            font-size: 15px;
+            font-weight: 700;
+
+            color: #20262e;
+
+            margin-bottom: 3px;
+        }
+
+        .feature-text {
+            font-size: 13px;
+
+            color: #7a8490;
+        }
+
+        /* CTA */
+
+        .cta {
+            display: block;
+
+            width: 100%;
+
+            padding: 17px 20px;
+
+            border-radius: 14px;
+
+            background: #25D366;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 17px;
+            font-weight: 700;
+
+            box-shadow:
+                0 9px 24px rgba(37, 211, 102, 0.28);
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        .cta:active {
+            transform: scale(0.98);
+
+            box-shadow:
+                0 5px 15px rgba(37, 211, 102, 0.20);
+        }
+
+        .cta-icon {
+            font-size: 20px;
+            margin-right: 7px;
+            vertical-align: -1px;
+        }
+
+        .cta-note {
+            margin-top: 11px;
+
+            font-size: 12px;
+
+            color: #8a939d;
+        }
+
+        /* 分隔线 */
+
+        .divider {
+            width: 70px;
+            height: 1px;
+
+            background: #e5e9e7;
+
+            margin: 28px auto 20px;
+        }
+
+        /* 底部 */
+
+        .footer {
+            font-size: 12px;
+            line-height: 1.7;
+
+            color: #9aa2aa;
+        }
+
+        /* 桌面 */
+
+        @media (min-width: 700px) {
+
+            .page {
+                padding-top: 70px;
+            }
+
+            .container {
+                max-width: 460px;
+            }
+
+            .logo {
+                width: 86px;
+                height: 86px;
+                font-size: 45px;
+            }
+
+            h1 {
+                font-size: 31px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <h2>WhatsApp 测试</h2>
+<div class="page">
 
-    <p id="status">正在尝试打开 WhatsApp...</p>
+    <main class="container">
 
-    <button class="wa" onclick="openWhatsApp()">
-        打开 WhatsApp
-    </button>
+        <!-- Logo -->
+        <div class="logo">
+            💬
+        </div>
 
-    <button class="web" onclick="openWeb()">
-        打开 WhatsApp 网页版
-    </button>
+        <!-- 标题 -->
+        <h1>
+            欢迎联系我们
+        </h1>
 
-<script>
-
-const phone = "33641302133";
-
-const message = "";
-
-function openWhatsApp() {
-
-    const appUrl =
-        "whatsapp://send?phone=" +
-        phone +
-        (message ? "&text=" + encodeURIComponent(message) : "");
-
-    window.location.href = appUrl;
-}
+        <p class="subtitle">
+            如果您有任何问题或需要进一步了解我们的服务，
+            欢迎通过 WhatsApp 与我们联系。
+        </p>
 
 
-function openWeb() {
+        <!-- 服务优势 -->
 
-    const webUrl =
-        "https://wa.me/" +
-        phone +
-        (message ? "?text=" + encodeURIComponent(message) : "");
+        <div class="features">
 
-    window.location.href = webUrl;
-}
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <div class="feature-content">
+
+                    <div class="feature-title">
+                        快速回复
+                    </div>
+
+                    <div class="feature-text">
+                        客服将尽快回复您的咨询
+                    </div>
+
+                </div>
+
+            </div>
 
 
-/*
- * 自动尝试
- */
+            <div class="feature">
 
-setTimeout(function () {
+                <div class="feature-icon">
+                    👤
+                </div>
 
-    document.getElementById("status").innerText =
-        "正在尝试打开 WhatsApp，如果没有打开，请点击下面按钮";
+                <div class="feature-content">
 
-    const appUrl =
-        "whatsapp://send?phone=" + phone;
+                    <div class="feature-title">
+                        一对一咨询
+                    </div>
 
-    window.location.href = appUrl;
+                    <div class="feature-text">
+                        专业客服为您提供专属帮助
+                    </div>
 
-}, 500);
+                </div>
 
-</script>
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🔒
+                </div>
+
+                <div class="feature-content">
+
+                    <div class="feature-title">
+                        安全便捷
+                    </div>
+
+                    <div class="feature-text">
+                        通过 WhatsApp 与我们直接沟通
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WhatsApp CTA -->
+
+        <a
+            class="cta"
+            href="https://clickurl.org/wyYV2k"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <span class="cta-icon">💬</span>
+
+            立即 WhatsApp 咨询
+
+        </a>
+
+
+        <div class="cta-note">
+            点击按钮后将进入 WhatsApp 咨询
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <div class="footer">
+            感谢您的关注与信任<br>
+            我们期待与您沟通
+        </div>
+
+    </main>
+
+</div>
 
 </body>
 </html>
+```
