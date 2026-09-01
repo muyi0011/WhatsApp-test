@@ -1,0 +1,179 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#25D366">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>WhatsApp 客服</title>
+<style>
+:root{
+  --green:#25D366;
+  --green-dark:#128C7E;
+  --bg:#f3f7f4;
+  --text:#17221a;
+  --muted:#69756e;
+  --line:#e6ece8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;color:var(--text)}
+body{background:linear-gradient(160deg,#edf8f1 0%,#f7faf8 48%,#eef5f1 100%)}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{
+  width:100%;max-width:440px;background:#fff;border-radius:26px;padding:30px 22px 24px;
+  box-shadow:0 18px 55px rgba(20,70,42,.12);text-align:center
+}
+.logo{
+  width:76px;height:76px;border-radius:50%;background:var(--green);margin:0 auto 17px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 9px 22px rgba(37,211,102,.24)
+}
+.logo svg{width:43px;height:43px;fill:#fff}
+h1{font-size:25px;line-height:1.3;margin:0 0 9px;font-weight:800}
+.sub{font-size:15px;line-height:1.65;color:var(--muted);margin:0 7px 21px}
+.info{background:#f6f9f7;border:1px solid var(--line);border-radius:16px;padding:15px 12px;margin-bottom:15px}
+.label{font-size:12px;color:#89938d;margin-bottom:6px}
+.number{font-size:21px;font-weight:800;letter-spacing:.3px}
+.btn{
+  width:100%;min-height:56px;border:0;border-radius:15px;background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;
+  font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 9px 20px rgba(37,211,102,.24)
+}
+.btn:active{transform:scale(.99)}
+.btn svg{width:24px;height:24px;fill:#fff}
+.secondary{
+  display:none;margin-top:12px;width:100%;min-height:48px;border:1px solid #dfe7e2;
+  border-radius:14px;background:#fff;color:#26332b;text-decoration:none;
+  align-items:center;justify-content:center;font-size:15px;font-weight:700
+}
+.hint{font-size:12px;line-height:1.6;color:#89938d;margin:16px 8px 0}
+.fb-tip{
+  display:none;text-align:left;background:#f8fbf9;border:1px solid var(--line);
+  border-radius:14px;padding:13px 14px;margin-top:14px;font-size:13px;line-height:1.6;color:#5e6962
+}
+.fb-tip b{color:#27332b}
+.error{
+  display:none;background:#fff4f4;border:1px solid #f2d7d7;color:#9c3d3d;
+  border-radius:12px;padding:12px;font-size:13px;line-height:1.5;margin-bottom:14px
+}
+.footer{font-size:11px;color:#a2aba6;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <main class="card">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.52 0 .18 5.34.18 11.9c0 2.1.55 4.15 1.6 5.96L.08 24l6.28-1.65a11.9 11.9 0 0 0 5.72 1.46h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.47-8.43ZM12.09 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.73.98 1-3.64-.23-.37a9.88 9.88 0 0 1-1.51-5.28C2.21 6.43 6.64 2 12.09 2c2.64 0 5.12 1.03 6.98 2.9a9.83 9.83 0 0 1 2.89 7c0 5.45-4.43 9.9-9.87 9.9Zm5.43-7.42c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.74-1.65-2.04-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.08 4.5.71.31 1.27.49 1.7.63.72.23 1.38.2 1.9.12.58-.09 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+      </svg>
+    </div>
+
+    <h1>联系 WhatsApp 客服</h1>
+    <p class="sub">您的客服已准备好，点击下面按钮开始 WhatsApp 聊天。</p>
+
+    <div id="error" class="error">
+      当前链接没有提供 WhatsApp 号码。请检查分流链接配置。
+    </div>
+
+    <div class="info">
+      <div class="label">当前分配的客服号码</div>
+      <div id="number" class="number">正在获取...</div>
+    </div>
+
+    <a id="openBtn" class="btn" href="#" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.52 0 .18 5.34.18 11.9c0 2.1.55 4.15 1.6 5.96L.08 24l6.28-1.65a11.9 11.9 0 0 0 5.72 1.46h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.47-8.43ZM12.09 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.73.98 1-3.64-.23-.37a9.88 9.88 0 0 1-1.51-5.28C2.21 6.43 6.64 2 12.09 2c2.64 0 5.12 1.03 6.98 2.9a9.83 9.83 0 0 1 2.89 7c0 5.45-4.43 9.9-9.87 9.9Zm5.43-7.42c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.74-1.65-2.04-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.08 4.5.71.31 1.27.49 1.7.63.72.23 1.38.2 1.9.12.58-.09 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+      </svg>
+      打开 WhatsApp
+    </a>
+
+    <a id="fallbackBtn" class="secondary" href="#">使用浏览器打开 WhatsApp</a>
+
+    <div id="fbTip" class="fb-tip">
+      <b>如果点击后仍停留在 Facebook：</b><br>
+      请点击 Facebook 页面右上角的「…」，选择<strong>在浏览器中打开</strong>，然后再次点击“打开 WhatsApp”。
+    </div>
+
+    <p class="hint">如果 WhatsApp 没有自动进入聊天，请点击按钮后等待几秒。</p>
+    <div class="footer">WhatsApp Click-to-Chat</div>
+  </main>
+</div>
+
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+
+  // 支持多种常见参数名称，方便接入不同分流平台
+  let phone =
+    params.get('phone') ||
+    params.get('number') ||
+    params.get('to') ||
+    params.get('wa') ||
+    '';
+
+  phone = phone.replace(/\D/g, '');
+
+  const numberEl = document.getElementById('number');
+  const openBtn = document.getElementById('openBtn');
+  const fallbackBtn = document.getElementById('fallbackBtn');
+  const error = document.getElementById('error');
+  const fbTip = document.getElementById('fbTip');
+
+  if (!phone) {
+    numberEl.textContent = '未指定号码';
+    error.style.display = 'block';
+    openBtn.style.opacity = '.5';
+    openBtn.removeAttribute('href');
+    return;
+  }
+
+  // WhatsApp Click-to-Chat
+  const waWeb = 'https://wa.me/' + phone;
+  // Android/iOS 常见的 WhatsApp 自定义 Scheme 备用方式
+  const waScheme = 'whatsapp://send?phone=' + phone;
+
+  numberEl.textContent = '+' + phone;
+  openBtn.href = waWeb;
+  fallbackBtn.href = waScheme;
+
+  // 检测 Facebook/Instagram 内置浏览器
+  const ua = navigator.userAgent || '';
+  const isMetaInApp = /FBAN|FBAV|FB_IAB|Instagram|Line\//i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+
+  if (isMetaInApp) {
+    fbTip.style.display = 'block';
+  }
+
+  /*
+   * 不强制自动唤起 App：
+   * Meta 内置浏览器对自动外部 App 跳转存在限制。
+   * 这里采用“用户主动点击”作为主要动作。
+   */
+
+  openBtn.addEventListener('click', function(){
+    // 用户主动点击后直接走官方 wa.me Universal Link。
+    // 如果 WebView 不允许交给 App，页面仍可由 WhatsApp Web 处理。
+    setTimeout(function(){
+      fallbackBtn.style.display = 'flex';
+    }, 1200);
+  });
+
+  fallbackBtn.addEventListener('click', function(e){
+    // 自定义 Scheme 仅作为备用，不作为首选。
+    if (!(isIOS || isAndroid)) {
+      e.preventDefault();
+      window.location.href = waWeb;
+    }
+  });
+})();
+</script>
+</body>
+</html>
+'''
+
+path = Path("/mnt/data/whatsapp_fb_ig_middle_page.html")
+path.write_text(html, encoding="utf-8")
+print(f"已生成：{path}")
